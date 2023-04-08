@@ -1,0 +1,28 @@
+:root {
+  --gold: #D4AF37;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	text-transform: uppercase;
+}
+
+strong, h2, h3, h4, h5 {
+	font-weight: bold;
+}
+
+.intro img {
+	max-width: 200px;
+}
+
+.main {
+	position: relative;
+}
+
+.gold, strong {
+	color: var(--gold);
+}
+
+footer {
+	font-size: 10px;
+}
