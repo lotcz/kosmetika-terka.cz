@@ -25,3 +25,12 @@
 .calendar .view-day .slot-minutes {
 	font-size: 0.5em;
 }
+
+.calendar-view .loading {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background-color: white;
+}

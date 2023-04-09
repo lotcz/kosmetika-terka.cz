@@ -1,5 +1,4 @@
 export const MODE_MONTH = 'month';
-export const MODE_WEEK = 'week';
 export const MODE_DAY = 'day';
 
 export const MONTHS = ['leden', 'únor', 'březen', 'duben', 'květen', 'červen', 'červenec', 'srpen', 'září', 'říjen', 'listopad', 'prosinec'];
@@ -90,54 +89,9 @@ class ModeMonth extends CalendarMode {
 	}
 }
 
-class ModeWeek extends CalendarMode {
-	constructor(calendar) {
-		super(calendar, MODE_WEEK, 'Týden', MODE_MONTH);
-	}
-
-	roundDate(date) {
-		const start = new Date(date);
-		const dayOffset = (date.getDay() + 6) % 7; 
-		start.setDate(date.getDate() - dayOffset);
-		return CalendarMode.roundDateDay(start);
-	}
-
-	getDescription() {
-		const startOfWeek = this.roundDate(this.calendar.currentDay);
-		const endOfWeek = new Date(startOfWeek);
-		endOfWeek.setDate(startOfWeek.getDate() + 6);
-		return `${CalendarMode.formatDate(startOfWeek)} - ${CalendarMode.formatDate(endOfWeek)}`;
-	}
-
-	getDateNext(currentDay) {
-		const nextWeek = new Date(currentDay);
-		nextWeek.setDate(currentDay.getDate() + 7);
-		return this.roundDate(nextWeek);
-	}
-
-	getDatePrev(currentDay) {
-		const prevWeek = new Date(currentDay);
-		prevWeek.setDate(currentDay.getDate() - 7);
-		return this.roundDate(prevWeek);
-	}
-	
-	render() {
-		this.calendar.view.innerHTML = '';
-		const view = CalendarMode.createElement(this.calendar.view, 'div', 'view-week');
-		for (let day = 0; day < 7; day++) {
-			const slot = CalendarMode.createElement(view, 'div', 'slot d-flex flex-row border-bottom');
-			const name = CalendarMode.createElement(slot, 'div', 'slot-day p-2 text-center border-end', DAYS[day]);
-			const body = CalendarMode.createElement(slot, 'div', 'slot-hours flex-1 text-small muted ps-2');
-			const date = new Date(this.roundDate(this.calendar.currentDay));
-			date.setDate(date.getDate() + day);
-			slot.addEventListener('click', () => this.calendar.setModeAndDay(MODE_DAY, date));
-		}
-	}
-}
-
 class ModeDay extends CalendarMode {
 	constructor(calendar) {
-		super(calendar, MODE_DAY, 'Den', MODE_WEEK);
+		super(calendar, MODE_DAY, 'Den', MODE_MONTH);
 	}
 
 	roundDate(date) {
@@ -145,7 +99,7 @@ class ModeDay extends CalendarMode {
 	}
 
 	getDescription() {
-		return CalendarMode.formatDateLong(this.calendar.currentDay);
+		return `${DAYS[(this.calendar.currentDay.getDay() + 6) % 7]}, ${CalendarMode.formatDateLong(this.calendar.currentDay)}`;
 	}
 
 	getDateNext(currentDay) {
@@ -194,8 +148,8 @@ export default class Calendar {
 	slotDuration = 0.25;
 	slotHeightPx = 15;
 
-	constructor(dom, admin = false, mode = MODE_DAY, day = new Date()) {
-		this.modes = [new ModeMonth(this), new ModeWeek(this), new ModeDay(this)];
+	constructor(dom, admin = false, mode = MODE_MONTH, day = new Date()) {
+		this.modes = [new ModeMonth(this), new ModeDay(this)];
 
 		this.dom = dom;
 		this.adminMode = admin;
@@ -206,7 +160,6 @@ export default class Calendar {
 				<button type="button" class="up-button btn btn-primary">&nbsp;</button>
 				<button type="button" class="prev-button btn btn-primary">&nbsp;</button>
 				<div class="description d-flex flex-row align-items-center">
-					<div class="mode-name"></div>:&nbsp;
 					<div class="date-desc"></div>
 				</div>
 				<button type="button" class="next-button btn btn-primary">&nbsp;</button>
@@ -221,7 +174,6 @@ export default class Calendar {
 		this.nextButton = this.dom.querySelector('.next-button');
 		this.nextButton.addEventListener('click', () => this.next());
 
-		this.modeName = this.dom.querySelector('.mode-name');
 		this.dateDesc = this.dom.querySelector('.date-desc');
 		this.view = this.dom.querySelector('.calendar-view');
 
@@ -272,15 +224,17 @@ export default class Calendar {
 	render() {
 		this.upButton.disabled = (this.mode.modeUpKey === undefined);
 		this.prevButton.disabled = (this.mode.getDatePrev(this.currentDay) < this.mode.roundDate(this.today));
-		this.modeName.innerText = this.mode.name;
 		this.dateDesc.innerText = this.mode.getDescription(this.currentDay);
 
-		
 		if (this.reservations === null) {
-			this.view.innerHTML = 
-				`<div class="spinner-border text-warning my-5 mx-auto p-5" role="status">
+			const spinner = CalendarMode.createElement(
+				this.view,
+				'div',
+				'loading d-flex align-items-center justify-items-center',
+				`<div class="spinner-border text-warning my-5 m-auto p-5" role="status">
 					<span class="visually-hidden">Loading...</span>
-				</div>`;
+				</div>`
+			);
 			return;
 		}
 		
