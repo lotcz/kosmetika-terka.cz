@@ -4,44 +4,63 @@ export const MODE_DAY = 'day';
 
 export const MONTHS = ['leden', 'únor', 'březen', 'duben', 'květen', 'červen', 'červenec', 'srpen', 'září', 'říjen', 'listopad', 'prosinec'];
 export const MONTHS_DECLINATED = ['ledna', 'února', 'března', 'dubna', 'května', 'června', 'července', 'srpna', 'září', 'října', 'listopadu', 'prosince'];
+export const DAYS = ['pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota', 'neděle'];
 
 class CalendarMode {
+	calendar;
 	key;
 	name;
 	modeUpKey;
 
-	constructor(key, name, up) {
+	constructor(calendar, key, name, up) {
+		this.calendar = calendar;
 		this.key = key;
 		this.name = name;
 		this.modeUpKey = up;
 	}
 
-	formatDate(date) {
+	static formatDate(date) {
 		return `${date.getDate()}. ${date.getMonth() + 1}. ${date.getFullYear()}`;
 	}
 
-	formatDateLong(date) {
+	static formatDateLong(date) {
 		return `${date.getDate()}. ${MONTHS_DECLINATED[date.getMonth()]}. ${date.getFullYear()}`;
 	}
 
-	roundDate(date) {
+	static roundDateDay(date) {
 		return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 	}
+	
+	static createElement(parent, tag, css = '', html = '') {
+		const el = document.createElement(tag);
+		el.className = css;
+		el.innerHTML = html;
+		parent.appendChild(el);
+		return el;
+	}
 
-	getDescription(currentDay) {}
+	getDescription() {}
 
 	getDateNext(currentDay) {}
 
 	getDatePrev(currentDay) {}
+
+	render() {}
 }
 
 class ModeMonth extends CalendarMode {
-	constructor() {
-		super(MODE_MONTH, 'Měsíc');
+	constructor(calendar) {
+		super(calendar, MODE_MONTH, 'Měsíc');
 	}
 
-	getDescription(currentDay) {
-		return `${MONTHS[currentDay.getMonth()]} ${currentDay.getFullYear()}`;
+	roundDate(date) {
+		const start = new Date(date);
+		start.setDate(1);
+		return CalendarMode.roundDateDay(start);
+	}
+
+	getDescription() {
+		return `${MONTHS[this.calendar.currentDay.getMonth()]} ${this.calendar.currentDay.getFullYear()}`;
 	}
 
 	getDateNext(currentDay) {
@@ -55,20 +74,39 @@ class ModeMonth extends CalendarMode {
 		prevMonth.setMonth(currentDay.getMonth() - 1);
 		return this.roundDate(prevMonth);
 	}
+	
+	render() {
+		this.calendar.view.innerHTML = '';
+		const view = CalendarMode.createElement(this.calendar.view, 'div', 'view-month');
+		const lastDate = this.getDateNext(this.roundDate(this.calendar.currentDay));
+		lastDate.setDate(0);
+		const lastDay = lastDate.getDate();
+		for (let day = 1; day <= lastDay; day++) {
+			const date = new Date(this.calendar.currentDay);
+			date.setDate(day);
+			const slot = CalendarMode.createElement(view, 'div', 'slot-day border-bottom border-end', day);
+			slot.addEventListener('click', () => this.calendar.setModeAndDay(MODE_DAY, date));
+		}
+	}
 }
 
 class ModeWeek extends CalendarMode {
-	constructor() {
-		super(MODE_WEEK, 'Týden', MODE_MONTH);
+	constructor(calendar) {
+		super(calendar, MODE_WEEK, 'Týden', MODE_MONTH);
 	}
 
-	getDescription(currentDay) {
-		const startOfWeek = new Date(currentDay);
-		const dayOffset = (currentDay.getDay() + 6) % 7; 
-		startOfWeek.setDate(currentDay.getDate() - dayOffset);
+	roundDate(date) {
+		const start = new Date(date);
+		const dayOffset = (date.getDay() + 6) % 7; 
+		start.setDate(date.getDate() - dayOffset);
+		return CalendarMode.roundDateDay(start);
+	}
+
+	getDescription() {
+		const startOfWeek = this.roundDate(this.calendar.currentDay);
 		const endOfWeek = new Date(startOfWeek);
 		endOfWeek.setDate(startOfWeek.getDate() + 6);
-		return `${this.formatDate(startOfWeek)} - ${this.formatDate(endOfWeek)}`;
+		return `${CalendarMode.formatDate(startOfWeek)} - ${CalendarMode.formatDate(endOfWeek)}`;
 	}
 
 	getDateNext(currentDay) {
@@ -82,15 +120,32 @@ class ModeWeek extends CalendarMode {
 		prevWeek.setDate(currentDay.getDate() - 7);
 		return this.roundDate(prevWeek);
 	}
+	
+	render() {
+		this.calendar.view.innerHTML = '';
+		const view = CalendarMode.createElement(this.calendar.view, 'div', 'view-week');
+		for (let day = 0; day < 7; day++) {
+			const slot = CalendarMode.createElement(view, 'div', 'slot d-flex flex-row border-bottom');
+			const name = CalendarMode.createElement(slot, 'div', 'slot-day p-2 text-center border-end', DAYS[day]);
+			const body = CalendarMode.createElement(slot, 'div', 'slot-hours flex-1 text-small muted ps-2');
+			const date = new Date(this.roundDate(this.calendar.currentDay));
+			date.setDate(date.getDate() + day);
+			slot.addEventListener('click', () => this.calendar.setModeAndDay(MODE_DAY, date));
+		}
+	}
 }
 
 class ModeDay extends CalendarMode {
-	constructor() {
-		super(MODE_DAY, 'Den', MODE_WEEK);
+	constructor(calendar) {
+		super(calendar, MODE_DAY, 'Den', MODE_WEEK);
 	}
-	
-	getDescription(currentDay) {
-		return this.formatDateLong(currentDay);
+
+	roundDate(date) {
+		return CalendarMode.roundDateDay(date);
+	}
+
+	getDescription() {
+		return CalendarMode.formatDateLong(this.calendar.currentDay);
 	}
 
 	getDateNext(currentDay) {
@@ -104,24 +159,48 @@ class ModeDay extends CalendarMode {
 		prevDay.setDate(currentDay.getDate() - 1);
 		return this.roundDate(prevDay);
 	}
+	
+	formatSlotTime(time) {
+		const hours = String(Math.floor(time));
+		const minutes = String((time - hours) * 60);
+		return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
+	}
+
+	render() {
+		this.calendar.view.innerHTML = '';
+		const view = CalendarMode.createElement(this.calendar.view, 'div', 'view-day');
+		for (let time = this.calendar.minStartTime; time < this.calendar.maxEndTime; time = time + 1) {
+			const slot = CalendarMode.createElement(view, 'div', 'slot d-flex flex-row border-bottom');
+			const hour = CalendarMode.createElement(slot, 'div', 'slot-time p-2 text-center border-end', this.formatSlotTime(time));
+			const minutes = CalendarMode.createElement(slot, 'div', 'slot-minutes flex-1 text-small muted ps-2');
+			for (let minute = time, max = time + 1; minute < max; minute = minute + this.calendar.slotDuration) {
+				const minuteSlot = CalendarMode.createElement(minutes, 'div', 'slot-body', this.formatSlotTime(minute));
+				minuteSlot.style.height = `${this.calendar.slotHeightPx}px`;
+			}
+		}
+	}
 }
 
-export const MODES = [new ModeMonth(), new ModeWeek(), new ModeDay()];
-
 export default class Calendar {
-
+	modes;
 	dom;
 	mode;
 	currentDay;
 	adminMode;
 	reservations = null;
 
+	minStartTime = 8;
+	maxEndTime = 18;
+	slotDuration = 0.25;
+	slotHeightPx = 15;
+
 	constructor(dom, admin = false, mode = MODE_DAY, day = new Date()) {
+		this.modes = [new ModeMonth(this), new ModeWeek(this), new ModeDay(this)];
+
 		this.dom = dom;
 		this.adminMode = admin;
 		this.currentDay = day;
-		this.today = new Date(day.getFullYear(), day.getMonth(), day.getDate());
-		
+
 		this.dom.innerHTML = 
 			`<form class="calendar-menu mb-3 d-flex flex-row justify-content-center">
 				<button type="button" class="up-button btn btn-primary">&nbsp;</button>
@@ -150,12 +229,17 @@ export default class Calendar {
 	}
 
 	setMode(modeKey) {
-		this.mode = MODES.find((m) => m.key === modeKey);
-		this.reload();
+		this.setModeAndDay(modeKey, this.currentDay);
 	}
 
 	setCurrentDay(day) {
-		this.currentDay = day;
+		this.setModeAndDay(this.mode.key, day);
+	}
+
+	setModeAndDay(modeKey, day) {
+		this.today = CalendarMode.roundDateDay(new Date());
+		this.mode = this.modes.find((m) => m.key === modeKey);
+		this.currentDay = this.mode.roundDate(day);
 		this.reload();
 	}
 
@@ -174,17 +258,24 @@ export default class Calendar {
 	reload() {
 		this.reservations = null;
 		this.render();
+		
 		// api call here;
+		setTimeout(
+			() => {
+				this.reservations = [];
+				this.render();
+			},
+			1000
+		)
 	}
 
 	render() {
 		this.upButton.disabled = (this.mode.modeUpKey === undefined);
-		this.prevButton.disabled = (this.mode.getDatePrev(this.currentDay) < this.today);
+		this.prevButton.disabled = (this.mode.getDatePrev(this.currentDay) < this.mode.roundDate(this.today));
 		this.modeName.innerText = this.mode.name;
 		this.dateDesc.innerText = this.mode.getDescription(this.currentDay);
 
-		this.view.innerHTML = this.currentDay.toISOString() + ' / ' + this.today.toISOString();
-		return;
+		
 		if (this.reservations === null) {
 			this.view.innerHTML = 
 				`<div class="spinner-border text-warning my-5 mx-auto p-5" role="status">
@@ -192,6 +283,8 @@ export default class Calendar {
 				</div>`;
 			return;
 		}
+		
+		this.mode.render();
 	}
 
 	setVisibility(element, visible) {

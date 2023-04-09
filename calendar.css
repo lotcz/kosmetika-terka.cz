@@ -21,3 +21,7 @@
 .calendar-menu .description {
 	margin-right: 10px;
 }
+
+.calendar .view-day .slot-minutes {
+	font-size: 0.5em;
+}
