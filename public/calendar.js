@@ -29,7 +29,7 @@ class CalendarMode {
 	static roundDateDay(date) {
 		return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 	}
-	
+
 	static createElement(parent, tag, css = '', html = '') {
 		const el = document.createElement(tag);
 		el.className = css;
@@ -73,7 +73,7 @@ class ModeMonth extends CalendarMode {
 		prevMonth.setMonth(currentDay.getMonth() - 1);
 		return this.roundDate(prevMonth);
 	}
-	
+
 	render() {
 		this.calendar.view.innerHTML = '';
 		const view = CalendarMode.createElement(this.calendar.view, 'div', 'view-month');
@@ -113,7 +113,7 @@ class ModeDay extends CalendarMode {
 		prevDay.setDate(currentDay.getDate() - 1);
 		return this.roundDate(prevDay);
 	}
-	
+
 	formatSlotTime(time) {
 		const hours = String(Math.floor(time));
 		const minutes = String((time - hours) * 60);
@@ -155,7 +155,7 @@ export default class Calendar {
 		this.adminMode = admin;
 		this.currentDay = day;
 
-		this.dom.innerHTML = 
+		this.dom.innerHTML =
 			`<form class="calendar-menu mb-3 d-flex flex-row justify-content-center">
 				<button type="button" class="up-button btn btn-primary">&nbsp;</button>
 				<button type="button" class="prev-button btn btn-primary">&nbsp;</button>
@@ -210,7 +210,7 @@ export default class Calendar {
 	reload() {
 		this.reservations = null;
 		this.render();
-		
+
 		// api call here;
 		setTimeout(
 			() => {
@@ -237,7 +237,7 @@ export default class Calendar {
 			);
 			return;
 		}
-		
+
 		this.mode.render();
 	}
 

@@ -33,4 +33,6 @@
 	bottom: 0;
 	right: 0;
 	background-color: white;
+	min-height: 250px;
+	min-width: 100%;
 }
