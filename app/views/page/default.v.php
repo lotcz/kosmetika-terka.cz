@@ -16,9 +16,9 @@
 					<li class="nav-item">
 						<a class="nav-link" href="#cenik">Ceník</a>
 					</li>
-					<li class="nav-item">
+					<!--li class="nav-item">
 						<a class="nav-link" href="#objednani">Objednání</a>
-					</li>
+					</li-->
 					<li class="nav-item">
 						<a class="nav-link" href="#kontakt">Kontakt</a>
 					</li>
@@ -51,7 +51,7 @@
 			?>
 		</div>
 
-		<div id="objednani">
+		<!--div id="objednani">
 			<h2>Objednání</h2>
 			<div class="text-center">
 				<h3>Kalendář</h3>
@@ -66,7 +66,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div-->
 
 		<div id="kontakt">
 			<?php

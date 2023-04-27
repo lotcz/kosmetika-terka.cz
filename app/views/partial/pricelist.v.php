@@ -1,51 +1,38 @@
-<tbody id="cenik">
+<div>
 	<h2>Ceník</h2>
 
 	<?php
-		$title = "";
-
-		foreach ($pricelist as $offer) {
-			if ($offer->get('cosmetic_service_category_name') !== $title) {
-				if ($title !== "") {
-					?>
-								</tbody>
-							</table>
-						</div>
-					<?php
-				}
-
-				$title = $offer->get('cosmetic_service_category_name');
-
-				?>
-					<div class="text-center">
-						<h3><?=$title?></h3>
-					</div>
-					<div class="col-lg-6 mx-auto">
-						<table class="table">
-							<tbody>
-				<?php
-			}
-
+		foreach ($pricelist as $title => $services) {
 			?>
-				<tr>
-					<td><?=$offer->get('cosmetic_service_name')?></td>
-					<td>
-						<?php
-							$t = $offer->get('cosmetic_service_duration_minutes');
-							if (strlen($t) > 0) {
-								echo $t . " min";
-							}
-						?>
-					</td>
-					<td><?=$this->formatMoney($offer->get('cosmetic_service_price'))?></td>
-				</tr>
-			<?php
-		}
-
-		if ($title !== "") {
-			?>
+				<div class="text-center">
+					<h3><?=$title?></h3>
+				</div>
+				<div class="col-lg-6 mx-auto">
+					<table class="table">
+						<tbody>
+							<?php
+								foreach ($services as $service) {
+									?>
+										<tr>
+											<td><?=$service->get('cosmetic_service_name')?></td>
+											<td>
+												<?php
+													$t = $service->get('cosmetic_service_duration_minutes');
+													if (strlen($t) > 0) {
+														echo $t . " min";
+													}
+												?>
+											</td>
+											<td><?=$this->formatMoney($service->get('cosmetic_service_price'))?></td>
+										</tr>
+									<?php
+								}
+							?>
 						</tbody>
 					</table>
 				</div>
 			<?php
 		}
+	?>
+
+</div>

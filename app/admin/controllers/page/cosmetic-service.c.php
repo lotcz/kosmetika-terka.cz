@@ -25,7 +25,7 @@
 				'name' => 'cosmetic_service_image',
 				'label' => 'Obrázek',
 				'type' => 'image',
-				'image_size' => 'thumb'
+				'image_size' => 'view'
 			],
 			[
 				'name' => 'cosmetic_service_description',
@@ -46,7 +46,7 @@
 			],
 			[
 				'name' => 'cosmetic_service_sorting_weight',
-				'label' => 'Řazení',
+				'label' => 'Řazení (vzestupně)',
 				'type' => 'integer',
 				'value' => 0
 			],

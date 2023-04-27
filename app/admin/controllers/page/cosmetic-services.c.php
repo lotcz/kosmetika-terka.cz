@@ -18,26 +18,26 @@
 			],
 			[
 				'name' => 'cosmetic_service_duration_minutes',
-				'label' => 'Trvání (v minutách)'
+				'label' => 'Trvání'
 			],
 			[
 				'name' => 'cosmetic_service_is_in_offers',
-				'label' => 'Zobrazit v nabídce',
+				'label' => 'Nabídka',
 				'type' => 'bool'
 			],
 			[
 				'name' => 'cosmetic_service_is_in_pricelist',
-				'label' => 'Zobrazit v ceníku',
+				'label' => 'Ceník',
 				'type' => 'bool'
 			],
 			[
 				'name' => 'cosmetic_service_is_in_calendar',
-				'label' => 'Zobrazit v kalendáři',
+				'label' => 'Kalendář',
 				'type' => 'bool'
 			]
 		],
 		'viewCosmeticServices',
-		['cosmetic_service_name'],
-		'cosmetic_service_name asc',
-		['cosmetic_service_name']
+		['cosmetic_service_category_name', 'cosmetic_service_name'],
+		'cosmetic_service_category_name asc',
+		['cosmetic_service_name', 'cosmetic_service_category_name']
 	);
