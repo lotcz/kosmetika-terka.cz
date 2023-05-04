@@ -8,5 +8,5 @@
 		'default_language' => 'cs',
 
 		//always force use of default language - use for single language sites
-		'force_default_language' => false,
+		'force_default_language' => true,
 	];

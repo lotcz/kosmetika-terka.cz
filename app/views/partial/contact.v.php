@@ -13,7 +13,7 @@
 					</address>
 				</div>
 				<div class="col-lg">
-					<p>mail: <a href="mailto:terka@seznam.cy">terka@seynam.cz</a></p>
+					<p>mail: <a href="mailto:terca.houskova@seznam.cz">terca.houskova@seznam.cz</a></p>
 					<p>tel: +420 605 743 494</p>
 					<p>IČ: 71780548</p>
 				</div>

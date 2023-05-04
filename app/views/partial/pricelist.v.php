@@ -15,7 +15,7 @@
 									?>
 										<tr>
 											<td><?=$service->get('cosmetic_service_name')?></td>
-											<td>
+											<td class="text-end">
 												<?php
 													$t = $service->get('cosmetic_service_duration_minutes');
 													if (strlen($t) > 0) {
@@ -23,7 +23,7 @@
 													}
 												?>
 											</td>
-											<td><?=$this->formatMoney($service->get('cosmetic_service_price'))?></td>
+											<td class="text-end"><?=$this->formatMoney($service->get('cosmetic_service_price'))?></td>
 										</tr>
 									<?php
 								}

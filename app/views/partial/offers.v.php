@@ -12,8 +12,8 @@
 						foreach ($services as $service) {
 							?>
 								<div class="col-lg-6">
-									<div class="p-3">
-										<div class="p-3">
+									<div class="p-lg-3">
+										<div class="p-2 p-lg-3 text-center">
 											<img src="<?=$this->z->images->img($service->get('cosmetic_service_image'), 'view')?>" class="rounded img-fluid">
 										</div>
 										<h4><?=$service->get('cosmetic_service_name')?></h4>

@@ -102,3 +102,12 @@ strong {
 footer {
 	font-size: 10px;
 }
+
+@media (max-width: 575px) {
+	body {
+		font-size: 12pt;
+	}
+	h2 {
+		margin-top: 3rem;
+	}
+}

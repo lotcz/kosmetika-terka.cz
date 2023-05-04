@@ -4,6 +4,12 @@ ErrorDocument 500 /error.html
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    # Redirect to www and https
+    RewriteCond %{HTTP_HOST} !^kosmetika.loc$
+	RewriteCond %{HTTP_HOST} !^www.kosmetika-terka.cz$ [OR]
+	RewriteCond %{SERVER_PORT} !^443$
+	RewriteRule ^ https://www.kosmetika-terka.cz%{REQUEST_URI} [END,NE,R=permanent]
+
     # Handle Front Page...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
