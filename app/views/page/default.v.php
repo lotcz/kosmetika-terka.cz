@@ -79,10 +79,10 @@
 		webmaster <a href="https://zavadil.eu" target="_blank"><strong>Karel Zavadil</strong></a>, &copy; 2023
 	</footer>
 
-	<script type="module" defer>
+	<!--script type="module" defer>
 		import Calendar from './calendar.js';
 		const calendar = new Calendar(document.getElementById('reservations'));
-	</script>
+	</script-->
 
 </main>
 
