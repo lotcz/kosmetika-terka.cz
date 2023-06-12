@@ -14,11 +14,11 @@
 						<a class="nav-link" href="#nabidka">Nabídka</a>
 					</li>
 					<li class="nav-item">
+						<a class="nav-link" href="#galerie">Galerie</a>
+					</li>
+					<li class="nav-item">
 						<a class="nav-link" href="#cenik">Ceník</a>
 					</li>
-					<!--li class="nav-item">
-						<a class="nav-link" href="#objednani">Objednání</a>
-					</li-->
 					<li class="nav-item">
 						<a class="nav-link" href="#kontakt">Kontakt</a>
 					</li>
@@ -42,6 +42,13 @@
 		<div id="nabidka">
 			<?php
 				$this->renderPartialView('offers', ['offers' => $offers]);
+			?>
+		</div>
+
+		<div id="galerie">
+			<h2>Galerie</h2>
+			<?php
+				$this->z->gallery->renderGallery($this->z->kosmetika->getGalleryId());
 			?>
 		</div>
 

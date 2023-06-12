@@ -4,6 +4,12 @@
 
 	class kosmetikaModule extends zModule {
 
+		private $default_gallery_id = 1;
+
+		public function getGalleryId() {
+			return $this->getConfigValue('gallery_id', $this->default_gallery_id);
+		}
+
 		public function loadPricelist() {
 			return $this->groupCosmeticServices(
 				$pricelist = CosmeticServiceModel::select(

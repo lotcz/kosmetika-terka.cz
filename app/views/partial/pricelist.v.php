@@ -1,4 +1,4 @@
-<div class="row">
+<div>
 	<h2>Ceník</h2>
 
 	<?php

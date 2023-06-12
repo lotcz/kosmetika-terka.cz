@@ -13,7 +13,7 @@
 		'formats' => [
 			'mini' => ['width' => 75, 'height' => 50 ],
 			'thumb' => ['width' => 160, 'height' => 140 ],
-			'view' => ['width' => 320, 'height' => 200 ],
+			'view' => ['width' => 1200, 'height' => 800 ],
 			'wide' => ['width' => 490, 'height' => 200 ]
 		],
 
