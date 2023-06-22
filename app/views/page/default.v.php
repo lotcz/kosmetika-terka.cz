@@ -20,6 +20,9 @@
 						<a class="nav-link" href="#cenik">Ceník</a>
 					</li>
 					<li class="nav-item">
+						<a class="nav-link" href="#objednani">Objednání</a>
+					</li>
+					<li class="nav-item">
 						<a class="nav-link" href="#kontakt">Kontakt</a>
 					</li>
 				</ul>
@@ -58,7 +61,7 @@
 			?>
 		</div>
 
-		<!--div id="objednani">
+		<div id="objednani">
 			<h2>Objednání</h2>
 			<div class="text-center">
 				<h3>Kalendář</h3>
@@ -69,11 +72,11 @@
 				</div>
 				<div class="card">
 					<div class="spinner-border text-warning my-5 mx-auto p-5" role="status">
-						<span class="visually-hidden">Loading...</span>
+						<span class="visually-hidden">Nahrávám...</span>
 					</div>
 				</div>
 			</div>
-		</div-->
+		</div>
 
 		<div id="kontakt">
 			<?php
@@ -86,10 +89,10 @@
 		webmaster <a href="https://zavadil.eu" target="_blank"><strong>Karel Zavadil</strong></a>, &copy; 2023
 	</footer>
 
-	<!--script type="module" defer>
+	<script type="module" defer>
 		import Calendar from './calendar.js';
 		const calendar = new Calendar(document.getElementById('reservations'));
-	</script-->
+	</script>
 
 </main>
 

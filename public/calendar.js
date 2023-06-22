@@ -1,9 +1,9 @@
 export const MODE_MONTH = 'month';
 export const MODE_DAY = 'day';
-
 export const MONTHS = ['leden', 'únor', 'březen', 'duben', 'květen', 'červen', 'červenec', 'srpen', 'září', 'říjen', 'listopad', 'prosinec'];
 export const MONTHS_DECLINATED = ['ledna', 'února', 'března', 'dubna', 'května', 'června', 'července', 'srpna', 'září', 'října', 'listopadu', 'prosince'];
 export const DAYS = ['pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota', 'neděle'];
+export const DAYS_SHORT = ['PO', 'ÚT', 'ST', 'ČT', 'PÁ', 'SO', 'NE'];
 
 class CalendarMode {
 	calendar;
@@ -18,6 +18,11 @@ class CalendarMode {
 		this.modeUpKey = up;
 	}
 
+	static getDayOfWeek(date) {
+		const d = date.getDay();
+		return d === 0 ? 7 : d;
+	}
+
 	static formatDate(date) {
 		return `${date.getDate()}. ${date.getMonth() + 1}. ${date.getFullYear()}`;
 	}
@@ -28,6 +33,10 @@ class CalendarMode {
 
 	static roundDateDay(date) {
 		return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+	}
+
+	static isSameDay(date1, date2) {
+		return this.roundDateDay(date1).getTime() === this.roundDateDay(date2).getTime();
 	}
 
 	static createElement(parent, tag, css = '', html = '') {
@@ -80,11 +89,40 @@ class ModeMonth extends CalendarMode {
 		const lastDate = this.getDateNext(this.roundDate(this.calendar.currentDay));
 		lastDate.setDate(0);
 		const lastDay = lastDate.getDate();
+		const now = new Date();
+		let dayOfWeek = CalendarMode.getDayOfWeek(this.calendar.currentDay);
+
+		for (let day = 0; day < 7; day++) {
+			CalendarMode.createElement(view, 'div', 'slot-day label', DAYS_SHORT[day]);
+		}
+
+		for (let day = dayOfWeek; day > 1; day--) {
+			CalendarMode.createElement(view, 'div', 'slot-day disabled');
+		}
+
 		for (let day = 1; day <= lastDay; day++) {
 			const date = new Date(this.calendar.currentDay);
 			date.setDate(day);
-			const slot = CalendarMode.createElement(view, 'div', 'slot-day border-bottom border-end', day);
-			slot.addEventListener('click', () => this.calendar.setModeAndDay(MODE_DAY, date));
+			dayOfWeek = CalendarMode.getDayOfWeek(date);
+			const slot = CalendarMode.createElement(view, 'div', 'slot-day', day);
+			if (dayOfWeek > 5) {
+				z.addClass(slot, 'weekend');
+			} else {
+				if (date.getTime() < now.getTime()) {
+					if (CalendarMode.isSameDay(date, now)) {
+						z.addClass(slot, 'today');
+					} else {
+						z.addClass(slot, 'past');
+					}
+				} else {
+					z.addClass(slot, 'available');
+					slot.addEventListener('click', () => this.calendar.setModeAndDay(MODE_DAY, date));
+				}
+			}
+		}
+
+		for (let day= CalendarMode.getDayOfWeek(lastDate); day < 7; day++) {
+			CalendarMode.createElement(view, 'div', 'slot-day disabled');
 		}
 	}
 }

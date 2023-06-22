@@ -40,5 +40,3 @@ CREATE VIEW viewCosmeticServices AS
 	SELECT *
 	FROM cosmetic_service s
 	LEFT OUTER JOIN cosmetic_service_category c ON (c.cosmetic_service_category_id = s.cosmetic_service_cosmetic_service_category_id);
-
-SELECT * FROM `viewCosmeticServices` WHERE cosmetic_service_category_is_in_pricelist = 1 and cosmetic_service_is_in_pricelist = 1 ORDER BY cosmetic_service_category_sorting_weight, cosmetic_service_category_name, cosmetic_service_sorting_weight, cosmetic_service_name
