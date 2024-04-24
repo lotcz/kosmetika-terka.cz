@@ -32,6 +32,17 @@
 			);
 		}
 
+		public function loadCalendarServices() {
+			return $this->groupCosmeticServices(
+				CosmeticServiceModel::select(
+					$this->z->db,
+					'viewCosmeticServices',
+					'cosmetic_service_category_is_in_calendar = 1 and cosmetic_service_is_in_calendar = 1',
+					'cosmetic_service_category_sorting_weight, cosmetic_service_category_name, cosmetic_service_sorting_weight, cosmetic_service_name'
+				)
+			);
+		}
+
 		private function groupCosmeticServices($services) {
 			$result = [];
 			$title = null;

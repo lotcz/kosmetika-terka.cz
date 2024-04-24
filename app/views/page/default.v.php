@@ -8,7 +8,7 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 
-			<div class="collapse navbar-collapse" id="navbar">
+			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="navbar-nav me-auto my-2 my-lg-0" style="--bs-scroll-height: 100px;">
 					<li class="nav-item">
 						<a class="nav-link" href="#nabidka">Nabídka</a>
@@ -66,15 +66,10 @@
 			<div class="text-center">
 				<h3>Kalendář</h3>
 			</div>
-			<div id="reservations" class="calendar">
-				<div class="placeholder-wave mb-3">
-					<span class="placeholder placeholder-lg col-4"></span>
-				</div>
-				<div class="card">
-					<div class="spinner-border text-warning my-5 mx-auto p-5" role="status">
-						<span class="visually-hidden">Nahrávám...</span>
-					</div>
-				</div>
+			<div>
+				<?php
+					$this->z->calendar->renderCalendar();
+				?>
 			</div>
 		</div>
 
@@ -88,11 +83,6 @@
 	<footer class="py-5 text-center">
 		webmaster <a href="https://zavadil.eu" target="_blank"><strong>Karel Zavadil</strong></a>, &copy; 2023
 	</footer>
-
-	<script type="module" defer>
-		import Calendar from './calendar.js';
-		const calendar = new Calendar(document.getElementById('reservations'));
-	</script>
 
 </main>
 

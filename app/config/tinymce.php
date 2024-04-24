@@ -18,6 +18,7 @@
 			'image_advtab' => true,
 			'image_dimensions' => false,
 			'typeahead_urls' => false,
+			'promotion' => false,
 			'style_formats' => [
 				[ 'title' => 'Odstavec', 'format' => 'p' ],
 				[ 'title' => 'Nadpis', 'format' => 'h2' ],

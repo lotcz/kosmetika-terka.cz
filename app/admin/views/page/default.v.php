@@ -9,6 +9,6 @@
 
 <h2>Kalendář</h2>
 
-<p>
-	Tady ještě bude kalendář s rezervacemi
-</p>
+<?php
+	$this->z->calendar->renderCalendar('admin-calendar', true);
+?>
