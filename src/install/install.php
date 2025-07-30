@@ -6,7 +6,7 @@
 	* db user must have permission to create tables.
 	*/
 
-	require_once __DIR__ . '/../../zEngine/src/zengine.php';
+	require_once __DIR__ . '/../zEngine/zengine.php';
 	$z = new zEngine(__DIR__ . '/../app/');
 
 	$options = getopt('l:p:n:', ['db_login::', 'db_password::', 'db_name::']);

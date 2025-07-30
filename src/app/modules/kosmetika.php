@@ -14,7 +14,7 @@
 			return $this->groupCosmeticServices(
 				$pricelist = CosmeticServiceModel::select(
 					$this->z->db,
-					'viewCosmeticServices',
+					'view_cosmetic_services',
 					'cosmetic_service_category_is_in_pricelist = 1 and cosmetic_service_is_in_pricelist = 1',
 					'cosmetic_service_category_sorting_weight, cosmetic_service_category_name, cosmetic_service_sorting_weight, cosmetic_service_name'
 				)
@@ -25,7 +25,7 @@
 			return $this->groupCosmeticServices(
 				CosmeticServiceModel::select(
 					$this->z->db,
-					'viewCosmeticServices',
+					'view_cosmetic_services',
 					'cosmetic_service_category_is_in_offers = 1 and cosmetic_service_is_in_offers = 1',
 					'cosmetic_service_category_sorting_weight, cosmetic_service_category_name, cosmetic_service_sorting_weight, cosmetic_service_name'
 				)
@@ -36,7 +36,7 @@
 			return $this->groupCosmeticServices(
 				CosmeticServiceModel::select(
 					$this->z->db,
-					'viewCosmeticServices',
+					'view_cosmetic_services',
 					'cosmetic_service_category_is_in_calendar = 1 and cosmetic_service_is_in_calendar = 1',
 					'cosmetic_service_category_sorting_weight, cosmetic_service_category_name, cosmetic_service_sorting_weight, cosmetic_service_name'
 				)

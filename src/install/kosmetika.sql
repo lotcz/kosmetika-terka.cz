@@ -34,9 +34,9 @@ CREATE TABLE `cosmetic_service` (
 ) ENGINE=InnoDB;
 
 
-DROP VIEW IF EXISTS `viewCosmeticServices`;
+DROP VIEW IF EXISTS `view_cosmetic_services`;
 
-CREATE VIEW viewCosmeticServices AS
+CREATE VIEW view_cosmetic_services AS
 	SELECT *
 	FROM cosmetic_service s
 	LEFT OUTER JOIN cosmetic_service_category c ON (c.cosmetic_service_category_id = s.cosmetic_service_cosmetic_service_category_id);

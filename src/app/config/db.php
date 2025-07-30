@@ -2,9 +2,9 @@
 
 	return [
 
-		'hostname' => 'localhost',
+		'hostname' => 'db',
 		'user' => 'root',
-		'password' => '',
+		'password' => 'root',
 		'database' => 'kosmetika'
 
 	];

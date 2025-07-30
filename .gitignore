@@ -1,8 +1,6 @@
 # IDEA
 .idea
 
-public/uploaded_images
-tests/vendor
-tests/process/target
-app/config/local/*.php
-zengine.log
+src/public/uploaded_images
+src/app/config/local/*.php
+

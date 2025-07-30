@@ -18,7 +18,7 @@
 		],
 
 		// absolute path to disk where all images are stored, include trailing slash
-		'images_disk_path' => 'C:\\develop\\kosmetika-terka.cz\\public\\uploaded_images\\',
+		'images_disk_path' => '/var/www/html/uploaded_images/',
 
 		// base url for images src, no trailing slash
 		'images_url' => 'http://kosmetika.loc/uploaded_images',

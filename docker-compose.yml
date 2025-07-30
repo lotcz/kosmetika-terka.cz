@@ -1,0 +1,51 @@
+services:
+  db:
+    image: mariadb:10.6.4-focal
+    command: '--default-authentication-plugin=mysql_native_password'
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=kosmetika
+      - MYSQL_USER=kosmetika
+      - MYSQL_PASSWORD=kosmetika
+    ports:
+      - 3307:3306
+    volumes:
+      - ./docker/mysql/data/:/var/lib/mysql/
+    networks:
+      - kosmetika-net
+
+  php-fpm:
+    build: ./docker/php
+    volumes:
+      - ./src/public:/var/www/html
+      - ./src/app:/var/www/app
+      - ./src/install:/var/www/install
+      - ../zEngine/src:/var/www/zEngine
+      - ./docker/log/apache/:/var/log/apache/
+      - ./docker/log/php/:/var/log/php/
+    networks:
+      - kosmetika-net
+    extra_hosts:
+      - "kosmetika.loc:host-gateway"
+
+  apache:
+    image: httpd:2.4-alpine
+    depends_on:
+      - php-fpm
+      - db
+    ports:
+      - 80:80
+    volumes:
+      - ./src/public:/var/www/html
+      - ./src/app:/var/www/app
+      - ./src/install:/var/www/install
+      - ../zEngine/src:/var/www/zEngine
+      - ./docker/apache/docker.apache.conf:/usr/local/apache2/conf/httpd.conf
+      - ./docker/log/apache/:/var/log/apache/
+      - ./docker/log/php/:/var/log/php/
+    networks:
+      - kosmetika-net
+
+networks:
+  kosmetika-net:
