@@ -8,14 +8,14 @@
 		'app_version' => 3.0,
 
 		// this is minimum required zEngine version
-		'minimum_z_version' => 21,
+		'minimum_z_version' => 23.0,
 
 		// modules that are enabled by default
 		// available modules in zEngine/src/app/modules or current app/modules folders
-		'default_modules' => ['resources', 'cookies', 'messages', 'analytics', 'i18n', 'alias', 'auth', 'admin', 'gallery', 'calendar', 'kosmetika'],
+		'default_modules' => ['resources', 'cookies', 'messages', 'analytics', 'i18n', 'alias', 'auth', 'admin', 'gallery', 'emails', 'calendar', 'kosmetika'],
 
 		// modules that are not enabled by default, but need to be installed
-		'also_install_modules' => ['forms', 'tinymce', 'emails', 'files'],
+		'also_install_modules' => ['forms', 'tinymce',  'files'],
 
 		'site_title' => 'Kosmetika TERKA',
 		'site_description' => 'Profesionální kosmetické služby v centru Prahy. Kosmetické ošetření pleti a nehtů, manikůra i pedikůra, galvanická žehlička. Osobní přístup a přátelská atmosféra.',

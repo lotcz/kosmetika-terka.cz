@@ -24,6 +24,7 @@ services:
       - ../zEngine/src:/var/www/zEngine
       - ./docker/log/apache/:/var/log/apache/
       - ./docker/log/php/:/var/log/php/
+      - ./docker/php/php-ob.ini:/usr/local/etc/php/conf.d/php-ob.ini
     networks:
       - kosmetika-net
     extra_hosts:
