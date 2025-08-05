@@ -8,4 +8,7 @@ $language_data['Are you sure to delete this record?'] = 'Opravdu se přejete sma
 $language_data['Cosmetic Service Category'] = 'Kategorie';
 $language_data['Cosmetic Service'] = 'Služba';
 
+$language_data['Conflict Exists!'] = 'Termín koliduje s jinou existující rezervací!';
+$language_data['Your reservation was saved.'] = 'Vaše rezervace byla uložena.';
+
 return $language_data;
