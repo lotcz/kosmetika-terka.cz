@@ -1,6 +1,9 @@
 <?php
 	
 	return [
+
+		'public_login_home' => '/#objednani',
+
 		// name of cookie used to store user session token
 		'cookie_name' => 'user_session_token',
 		
