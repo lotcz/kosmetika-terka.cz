@@ -33,10 +33,9 @@ CREATE TABLE `cosmetic_service` (
 	UNIQUE INDEX `cosmetic_service_name_unique` (`cosmetic_service_name` ASC)
 ) ENGINE=InnoDB;
 
-DROP VIEW IF EXISTS `view_calendar_reservations`;
+DROP VIEW IF EXISTS `view_cosmetic_services`;
 
-CREATE VIEW view_calendar_reservations AS
-	SELECT cr.*, u.user_email as `email`, cs.cosmetic_service_name as `service`
-	FROM `calendar_reservation` cr
-	LEFT OUTER JOIN `user` u ON (u.user_id = cr.calendar_reservation_user_id)
-	LEFT OUTER JOIN `view_cosmetic_services` cs ON (cs.cosmetic_service_id = cr.calendar_reservation_cosmetic_service_id);
+CREATE VIEW `view_cosmetic_services` AS
+select *
+from `cosmetic_service` `s`
+left join `cosmetic_service_category` `c` on (`c`.`cosmetic_service_category_id` = `s`.`cosmetic_service_cosmetic_service_category_id`);

@@ -1,0 +1,7 @@
+- prihlaste se prosim "zde" - doplnit link
+- instruktazni video
+- poznamka k rezervaci
+- mobilni verze
+- rezervacni maily
+  - upozorneni na blizici se termin (zakaznik)
+  - upozorneni na novou rezervaci (admin)
