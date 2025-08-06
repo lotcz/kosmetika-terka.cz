@@ -3,6 +3,6 @@
 	return [
 
 		// default e-mail address from which emails will be sent
-		'from_address' => 'info@kosmetika-terka.cz',
+		'from_address' => 'rezervace@kosmetika-terka.cz',
 
 	];
