@@ -9,6 +9,7 @@
 		'custom_menu' => [
 			['admin/cosmetic-service-categories', 'Kategorie'],
 			['admin/cosmetic-services', 'Služby'],
+			['admin/users', 'Zákazníci'],
 		],
 
 	];

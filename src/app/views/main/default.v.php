@@ -30,7 +30,7 @@
 		</div>
 	</nav>
 
-	<div class="main container-md py-5">
+	<div class="main container-md py-3">
 		<?php
 			$this->renderMessages();
 			$this->renderPageView();

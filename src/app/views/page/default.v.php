@@ -1,4 +1,4 @@
-<div class="text-center intro">
+<div class="text-center intro pt-4">
 	<div class="mx-auto">
 		<img src="<?=$this->z->images->img($intro->get('cosmetic_service_image'), 'view')?>" class="rounded img-fluid">
 		<h1 class="m-3 my-5">Kosmetika <strong>Terka</strong></h1>
