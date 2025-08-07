@@ -1,6 +1,6 @@
+- editace profilu (telefon)
 - rezervacni maily
   - upozorneni na blizici se termin (zakaznik)
   - upozorneni na novou rezervaci (admin i zakaznik)
-- poznamka a tel k rezervaci
 - mobilni verze
 - instruktazni video
