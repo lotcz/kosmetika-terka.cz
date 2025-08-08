@@ -1,4 +1,3 @@
-- registrace (telefon)
 - editace profilu (telefon)
 - mobilni verze
 - instruktazni video
