@@ -210,6 +210,8 @@ class ModeDay extends CalendarMode {
 					const owner = this.calendar.user && reservation.email === this.calendar.user.email;
 					if (this.calendar.adminMode || owner) {
 						minuteSlot.addEventListener('click', () => this.calendar.showForm(reservation));
+						z.createElement(minuteSlot, 'div', 'usr-name ps-2', reservation.name);
+						z.createElement(minuteSlot, 'div', 'usr-phone ps-2', reservation.phone);
 						z.createElement(minuteSlot, 'div', 'usr-email ps-2', reservation.email);
 						z.createElement(minuteSlot, 'div', 'ps-2', reservation.whole_day ? "DOVOLENÁ" : reservation.service);
 						z.createElement(minuteSlot, 'div', 'ps-2', reservation.note);
@@ -634,7 +636,7 @@ export default class Calendar {
 			name.setAttribute('data-z-original-display', 'flex');
 			z.createElement(name, 'label', 'py-1 col-sm-4 col-form-label', 'Zákazník');
 			const nameCol = z.createElement(name, 'div', 'col-sm-8 py-1');
-			z.createElement(nameCol, 'div', 'align-items-center small', `${reservation.name || ''} ${reservation.email || ''} ${reservation.phone || ''}`);
+			z.createElement(nameCol, 'div', 'align-items-center small', `${reservation.name || ''} (${reservation.email || ''}) tel: ${reservation.phone || ''}`);
 		}
 
 		const note = this.noteControl = z.createElement(form, 'div', 'note row mb-1');
