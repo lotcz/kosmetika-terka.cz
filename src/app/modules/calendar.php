@@ -17,6 +17,8 @@ class calendarModule extends zModule {
 	function onBeforeRender() {
 		$this->z->core->includeCSS('resources/calendar/calendar.css', 'head');
 		$this->z->core->includeCSS('resources/calendar/calendar.css', 'admin.head');
+		$this->z->core->includeCSS('resources/calendar/calendar-responsive.css', 'head');
+		$this->z->core->includeCSS('resources/calendar/calendar-responsive.css', 'admin.head');
 	}
 
 	function renderCalendar($name = 'calendar-main', $admin = false) {

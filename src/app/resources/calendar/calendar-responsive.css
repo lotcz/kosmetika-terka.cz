@@ -1,0 +1,63 @@
+/* Extra Large devices (desktops, more than 1200px)
+
+	This is default design.
+
+*/
+
+/* Large devices (desktops, less than 1200px) */
+@media (max-width: 1199.98px) {
+
+
+}
+
+/* Medium devices (tablets, less than 992px) */
+@media (max-width: 991.98px) {
+
+}
+
+/* Small devices (landscape phones, less than 768px) */
+@media (max-width: 767.98px) {
+
+	.calendar .calendar-view {
+		font-size: 12pt;
+	}
+
+	.calendar .view-month .slot-day {
+		padding: 10px;
+		border-radius: 5px;
+	}
+
+	.calendar .view-month .slot-day .reservations .reservation {
+		width: 5px;
+		height: 5px;
+		background-color: #1e4d1e;
+		border-radius: 2px;
+		margin-right: 2px;
+	}
+
+	.calendar .form-wrapper {
+		position: fixed;
+		justify-content: start;
+		border-radius: 0;
+	}
+
+	.calendar .form-wrapper .form {
+		background-color: #fff;
+		border-radius: 5px;
+		padding: 10px;
+		min-width: auto;
+		margin-top: 57px;
+	}
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+
+
+}
+
+/* Ultra small devices */
+@media (max-width: 375px) {
+
+
+}

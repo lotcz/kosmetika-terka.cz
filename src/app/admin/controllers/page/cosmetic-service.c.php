@@ -25,7 +25,7 @@
 				'name' => 'cosmetic_service_image',
 				'label' => 'Obrázek',
 				'type' => 'image',
-				'image_size' => 'view'
+				'image_size' => 'wide'
 			],
 			[
 				'name' => 'cosmetic_service_description',

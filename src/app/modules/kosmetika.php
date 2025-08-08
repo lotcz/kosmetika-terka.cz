@@ -6,6 +6,10 @@
 
 		private $default_gallery_id = 1;
 
+		public function onEnabled() {
+			$this->z->core->includeJS('resources/kosmetika.js', 'bottom');
+		}
+
 		public function getGalleryId() {
 			return $this->getConfigValue('gallery_id', $this->default_gallery_id);
 		}

@@ -37,7 +37,8 @@
 		'includes' => [
 			['https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js', 'link_js', 'bottom'],
 			['https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css', 'link_css', 'head'],
-			['style.css', 'link_css', 'head']
+			['style.css', 'link_css', 'head'],
+			['style-responsive.css', 'link_css', 'head']
 		]
 
 	];
