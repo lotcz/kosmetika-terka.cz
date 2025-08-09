@@ -1,2 +1,2 @@
-- mobilni verze
+- na mobilu nelze zrusit rezervaci
 - instruktazni video
