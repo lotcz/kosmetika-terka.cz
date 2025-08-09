@@ -188,8 +188,6 @@ class ModeDay extends CalendarMode {
 		const date = new Date(this.calendar.currentDay);
 		const endDate = new Date(this.calendar.currentDay);
 		endDate.setHours(this.calendar.maxEndTime);
-		const allDayReservations = this.calendar.getReservations(date, endDate);
-		const hasWhole = allDayReservations.some((r) => r.whole_day);
 
 		for (let time = this.calendar.minStartTime; time < this.calendar.maxEndTime; time = time + 1) {
 			const slot = CalendarMode.createElement(view, 'div', 'slot d-flex flex-row');
@@ -698,8 +696,9 @@ export default class Calendar {
 	}
 
 	render() {
+		this.mode.modeUpKey ? z.show(this.upButton) : z.hide(this.upButton);
+		this.mode.modeUpKey ? z.hide(this.homeButton) : z.show(this.homeButton);
 		this.homeButton.disabled = (this.currentDay.getTime() === this.mode.roundDate(this.today).getTime());
-		this.upButton.disabled = (this.mode.modeUpKey === undefined);
 		this.prevButton.disabled = (this.mode.getDatePrev(this.currentDay) < this.mode.roundDate(this.today));
 		this.dateDesc.innerText = this.mode.getDescription(this.currentDay);
 
