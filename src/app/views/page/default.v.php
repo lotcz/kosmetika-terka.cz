@@ -39,7 +39,10 @@
 				if ($this->z->auth->isAuth() && !$this->z->auth->isAnonymous()) {
 					$email = $this->z->auth->user->val('user_email');
 					echo "Jste přihlášeni jako uživatel <strong>$email</strong>. <br/>";
-					echo "<a class='btn btn-link' href='/profile'>Upravit profil</a>";
+					if ($this->z->auth->isAdmin()) {
+						echo "<a class='btn btn-link' href='/admin'>Administrace</a> ";
+					}
+					echo "<a class='btn btn-link' href='/profile'>Upravit profil</a> ";
 					echo "<a class='btn btn-primary btn-sm mx-2' href='/logout'>Odhlásit se</a>";
 				} else {
 					echo "Pro vkládání rezervací do kalendáře se musíte <a href='/login'>přihlásit</a>.";

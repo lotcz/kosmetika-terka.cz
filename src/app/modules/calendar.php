@@ -34,7 +34,7 @@ class calendarModule extends zModule {
 				</div>
 			</div>
 			<script type="module" defer>
-				import Calendar from '/resources/calendar/calendar.js?<?=$this->z->version?>';
+				import Calendar from '/resources/calendar/calendar.js?<?=$this->z->core->app_version?>';
 				const calendar = new Calendar(document.getElementById('<?=$name?>'), <?=$admin ? 'true' : 'false'?>);
 			</script>
 		<?php
