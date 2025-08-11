@@ -29,7 +29,7 @@
 			]
 		],
 		'cosmetic_service_category',
-		[],
+		['cosmetic_service_category_sorting_weight', 'cosmetic_service_category_name', 'cosmetic_service_category_is_in_offers', 'cosmetic_service_category_is_in_pricelist', 'cosmetic_service_category_is_in_calendar'],
 		'cosmetic_service_category_sorting_weight asc',
 		['cosmetic_service_category_name']
 	);

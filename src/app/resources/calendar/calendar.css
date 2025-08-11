@@ -149,9 +149,8 @@
 }
 
 .calendar .view-month .slot-day.today {
-	box-shadow: 0 0 8px #5172de;
-	background: #5172de;
-	color: #fff;
+	box-shadow: 0 0 10px #5172de;
+
 }
 
 .calendar .view-day .slot {

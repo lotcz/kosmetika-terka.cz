@@ -13,6 +13,10 @@
 				'label' => 'Name'
 			],
 			[
+				'name' => 'cosmetic_service_sorting_weight',
+				'label' => 'Řazení'
+			],
+			[
 				'name' => 'cosmetic_service_price',
 				'label' => 'Price'
 			],
@@ -37,7 +41,7 @@
 			]
 		],
 		'view_cosmetic_services',
-		['cosmetic_service_category_name', 'cosmetic_service_name'],
-		'cosmetic_service_category_sorting_weight,cosmetic_service_category_name,cosmetic_service_sorting_weight,cosmetic_service_name asc',
-		['cosmetic_service_name', 'cosmetic_service_category_name', 'cosmetic_service_price', 'cosmetic_service_duration_minutes']
+		['cosmetic_service_sorting_weight', 'cosmetic_service_category_name', 'cosmetic_service_name', 'cosmetic_service_price', 'cosmetic_service_duration_minutes', 'cosmetic_service_is_in_offers', 'cosmetic_service_is_in_pricelist', 'cosmetic_service_is_in_calendar'],
+		'cosmetic_service_category_sorting_weight,cosmetic_service_category_name,cosmetic_service_sorting_weight,cosmetic_service_name',
+		['cosmetic_service_name', 'cosmetic_service_category_name']
 	);

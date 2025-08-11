@@ -1,11 +1,25 @@
 <ul>
 	<li>
-		<a href="<?=$this->url('admin/default/default/gallery/edit/' . $this->z->kosmetika->getGalleryId()) ?>">
-			Upravit galerii
+		<a href="<?=$this->url('admin/cosmetic-service-categories') ?>">
+			Kategorie
+		</a>
+	</li>
+	<li>
+		<a href="<?=$this->url('admin/cosmetic-services') ?>">
+			Služby
+		</a>
+	</li>
+	<li>
+		<a href="<?=$this->url('admin/users')?>">
+			Zákazníci
+		</a>
+	</li>
+	<li>
+		<a href="<?=$this->url('admin/default/default/gallery/edit/') ?>">
+			Galerie
 		</a>
 	</li>
 </ul>
-
 
 <h2>Kalendář</h2>
 
