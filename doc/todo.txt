@@ -1,10 +1,1 @@
-- instruktazni video
-  - reset hesla
-  - prihlaseni
-    - pres /admin
-    - pres kalendar
-  - uprava kategorii
-  - uprava sluzeb a cen
-  - kalendar
-    - uprava a ruseni rezervaci
-    - vkladani dovolene
+- done
