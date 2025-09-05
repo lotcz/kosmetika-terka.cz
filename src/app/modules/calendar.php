@@ -8,20 +8,28 @@ class calendarModule extends zModule {
 
 	public $notify_email;
 	public $from_address;
+	public $allow_weekends = true;
+	public $day_start_time = 8;
+	public $day_end_time = 20;
+	public $slot_duration = 0.25;
 
 	public function onEnabled() {
 		$this->notify_email = $this->getConfigValue('notify_email');
 		$this->from_address = $this->getConfigValue('from_address');
+		$this->allow_weekends = $this->getConfigValue('allow_weekends', $this->allow_weekends);
+		$this->day_start_time = $this->getConfigValue('day_start_time', $this->day_start_time);
+		$this->day_end_time = $this->getConfigValue('day_end_time', $this->day_end_time);
+		$this->slot_duration = $this->getConfigValue('slot_duration', $this->slot_duration);
 	}
 
-	function onBeforeRender() {
+	public function onBeforeRender() {
 		$this->z->core->includeCSS('resources/calendar/calendar.css', 'head');
 		$this->z->core->includeCSS('resources/calendar/calendar.css', 'admin.head');
 		$this->z->core->includeCSS('resources/calendar/calendar-responsive.css', 'head');
 		$this->z->core->includeCSS('resources/calendar/calendar-responsive.css', 'admin.head');
 	}
 
-	function renderCalendar($name = 'calendar-main', $admin = false) {
+	public function renderCalendar($name = 'calendar-main', $admin = false) {
 		?>
 			<div id="<?=$name?>" class="calendar">
 				<div class="placeholder-wave mb-3">
@@ -34,8 +42,14 @@ class calendarModule extends zModule {
 				</div>
 			</div>
 			<script type="module" defer>
-				import Calendar from '/resources/calendar/calendar.js?<?=$this->z->core->app_version?>';
-				const calendar = new Calendar(document.getElementById('<?=$name?>'), <?=$admin ? 'true' : 'false'?>);
+				import {Calendar, CalendarSettings} from '/resources/calendar/calendar.js?<?=$this->z->core->app_version?>';
+				const calendarSettings = new CalendarSettings();
+				calendarSettings.admin = <?=$admin ? 'true' : 'false'?>;
+				calendarSettings.allowWeekends = <?=$this->allow_weekends ? 'true' : 'false'?>;
+				calendarSettings.minStartTime = <?=$this->day_start_time?>;
+				calendarSettings.maxEndTime = <?=$this->day_end_time?>;
+				calendarSettings.slotDuration = <?=$this->slot_duration?>;
+				const calendar = new Calendar(document.getElementById('<?=$name?>'), calendarSettings);
 			</script>
 		<?php
 	}
@@ -102,14 +116,35 @@ class calendarModule extends zModule {
 		return false;
 	}
 
+	function getHours(DateTime $dt) {
+		$hours = (int)$dt->format("H");
+		$minutes = (int)$dt->format("i");
+		return $hours + ($minutes / 60);
+	}
+
+	function timeWithinBounds(DateTime $start, DateTime $end): bool {
+		if ($start == null || $end == null) return false;
+		$startH = $this->getHours($start);
+		$endH = $this->getHours($end);
+		return ($startH >= $this->day_start_time) && ($endH <= $this->day_end_time);
+	}
+
 	function saveReservation(?int $id, int $user_id, DateTime $start, int $service_id, int $duration, bool $whole_day, ?string $note) {
-		if ($user_id !== $this->z->auth->user->ival('user_id') && !$this->z->admin->isAdmin()) {
+		$isAdmin = $this->z->admin->isAdmin();
+
+		if ($user_id !== $this->z->auth->user->ival('user_id') && !$isAdmin) {
 			throw new Exception($this->z->core->t("Access Forbidden!"));
 		}
 
-		$dayOfWeek = intval($start->format('w'));
-		if ($dayOfWeek < 1 || $dayOfWeek > 5) {
-			throw new Exception($this->z->core->t("Invalid day!"));
+		if ($whole_day && !$isAdmin) {
+			throw new Exception($this->z->core->t("Only admin can reserve whole day!"));
+		}
+
+		if (!$this->allow_weekends) {
+			$dayOfWeek = intval($start->format('w'));
+			if ($dayOfWeek < 1 || $dayOfWeek > 5) {
+				throw new Exception($this->z->core->t("Invalid day!"));
+			}
 		}
 
 		if ($whole_day) {
@@ -120,6 +155,10 @@ class calendarModule extends zModule {
 
 		if ($this->conflictsExists($start, $end, $id)) {
 			throw new Exception($this->z->core->t("Conflict Exists!"));
+		}
+
+		if (!($whole_day || $this->timeWithinBounds($start, $end))) {
+			throw new Exception($this->z->core->t("Time out of bounds!"));
 		}
 
 		$res = null;

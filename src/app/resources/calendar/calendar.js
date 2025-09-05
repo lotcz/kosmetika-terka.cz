@@ -5,6 +5,16 @@ export const MONTHS_DECLINATED = ['ledna', 'února', 'března', 'dubna', 'květn
 export const DAYS = ['pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota', 'neděle'];
 export const DAYS_SHORT = ['PO', 'ÚT', 'ST', 'ČT', 'PÁ', 'SO', 'NE'];
 
+export class CalendarSettings {
+	admin = false;
+	defaultMode = MODE_MONTH;
+	defaultDay = new Date();
+	allowWeekends = true;
+	minStartTime = 8;
+	maxEndTime = 20;
+	slotDuration = 0.25;
+}
+
 class CalendarMode {
 	calendar;
 	key;
@@ -172,14 +182,18 @@ class ModeDay extends CalendarMode {
 	getDateNext(currentDay) {
 		const nextDay = new Date(currentDay);
 		nextDay.setDate(nextDay.getDate() + 1);
-		while (CalendarMode.getDayOfWeek(nextDay) > 5) nextDay.setDate(nextDay.getDate() + 1);
+		if (!this.calendar.settings.allowWeekends) {
+			while (CalendarMode.getDayOfWeek(nextDay) > 5) nextDay.setDate(nextDay.getDate() + 1);
+		}
 		return this.roundDate(nextDay);
 	}
 
 	getDatePrev(currentDay) {
 		const prevDay = new Date(currentDay);
 		prevDay.setDate(prevDay.getDate() - 1);
-		while (CalendarMode.getDayOfWeek(prevDay) > 5) prevDay.setDate(prevDay.getDate() - 1);
+		if (!this.calendar.settings.allowWeekends) {
+			while (CalendarMode.getDayOfWeek(prevDay) > 5) prevDay.setDate(prevDay.getDate() - 1);
+		}
 		return this.roundDate(prevDay);
 	}
 
@@ -194,20 +208,20 @@ class ModeDay extends CalendarMode {
 		const view = CalendarMode.createElement(this.calendar.view, 'div', 'view-day');
 		const date = new Date(this.calendar.currentDay);
 		const endDate = new Date(this.calendar.currentDay);
-		endDate.setHours(this.calendar.maxEndTime);
+		endDate.setHours(this.calendar.settings.maxEndTime);
 
-		for (let time = this.calendar.minStartTime; time < this.calendar.maxEndTime; time = time + 1) {
+		for (let time = this.calendar.settings.minStartTime; time < this.calendar.settings.maxEndTime; time = time + 1) {
 			const slot = CalendarMode.createElement(view, 'div', 'slot d-flex flex-row');
 			const hour = CalendarMode.createElement(slot, 'div', 'slot-time p-2 text-center', this.formatSlotTime(time));
 			const minutes = CalendarMode.createElement(slot, 'div', 'slot-minutes text-small muted');
-			for (let minute = time, max = time + 1; minute < max; minute = minute + this.calendar.slotDuration) {
+			for (let minute = time, max = time + 1; minute < max; minute = minute + this.calendar.settings.slotDuration) {
 				const minuteSlot = CalendarMode.createElement(minutes, 'div', 'slot-body ps-2');
 				z.createElement(minuteSlot, 'div', 'time', this.formatSlotTime(minute));
 				date.setHours(time);
 				const mins = (minute - time) * 60;
 				date.setMinutes(mins);
 				const next = new Date(date);
-				next.setMinutes(mins + (this.calendar.slotDuration * 60));
+				next.setMinutes(mins + (this.calendar.settings.slotDuration * 60));
 				const reservations = this.calendar.getReservations(date, next);
 				if (reservations.length > 0) {
 					const reservation = reservations[0];
@@ -255,28 +269,25 @@ class ModeDay extends CalendarMode {
 	}
 }
 
-export default class Calendar {
+export class Calendar {
 	dom;
 	modes = [new ModeMonth(this), new ModeDay(this)];
-	mode = null;
+	mode = MODE_MONTH;
 	user = null;
+	settings = null;
 	currentDay = new Date();
 	adminMode = false;
 	activeUser = false;
 	reservations = null;
 	reservation = null;
-
-	minStartTime = 8;
-	maxEndTime = 18;
-	slotDuration = 0.25;
-	slotHeightPx = 15;
-
 	isFormChanged = false;
 
-	constructor(dom, admin = false, mode = MODE_MONTH, day = new Date()) {
+	constructor(dom, settings) {
 		this.dom = dom;
-		this.adminMode = admin;
-		this.currentDay = day;
+		this.settings = settings;
+		this.mode = null;
+		this.adminMode = this.settings.admin;
+		this.currentDay = this.settings.defaultDay;
 		this.services = {};
 
 		this.dom.innerHTML =
@@ -309,7 +320,7 @@ export default class Calendar {
 		this.view = this.dom.querySelector('.calendar-mode');
 		this.form = this.dom.querySelector('.calendar-form');
 
-		this.setMode(mode);
+		this.setMode(this.settings.defaultMode);
 		this.loadServices();
 		this.reloadCurrentUser();
 	}
@@ -430,9 +441,9 @@ export default class Calendar {
 		z.show(this.nameControl);
 		z.show(this.noteControl);
 		this.durationUnitControl.innerText = 'minut';
-		this.durationInputControl.setAttribute('min', 60 * this.slotDuration);
-		this.durationInputControl.setAttribute('max', 60 * 16 * this.slotDuration);
-		this.durationInputControl.setAttribute('step', 60 * this.slotDuration);
+		this.durationInputControl.setAttribute('min', 60 * this.settings.slotDuration);
+		this.durationInputControl.setAttribute('max', 60 * 16 * this.settings.slotDuration);
+		this.durationInputControl.setAttribute('step', 60 * this.settings.slotDuration);
 	}
 
 	showFormMessage(message = '', style = 'light') {
@@ -625,9 +636,9 @@ export default class Calendar {
 		inp.setAttribute('id', 'duration');
 		inp.setAttribute('name', 'duration');
 		inp.setAttribute('type', 'number');
-		inp.setAttribute('min', 60 * this.slotDuration);
-		inp.setAttribute('max', 60 * 16 * this.slotDuration);
-		inp.setAttribute('step', 60 * this.slotDuration);
+		inp.setAttribute('min', 60 * this.settings.slotDuration);
+		inp.setAttribute('max', 60 * 16 * this.settings.slotDuration);
+		inp.setAttribute('step', 60 * this.settings.slotDuration);
 		inp.setAttribute('value', reservation.duration);
 		inp.addEventListener('change', (e) => {
 			reservation.duration = Number(e.target.value);

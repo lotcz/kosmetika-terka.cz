@@ -1,4 +1,1 @@
-- oteviraci doba do 20.00
-- i vikendy
-- nezobrazovat dovolenou jako "DOVOLENA"
 - Google maps verifikace
