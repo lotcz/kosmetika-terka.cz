@@ -129,7 +129,7 @@ class ModeMonth extends CalendarMode {
 			dateNext.setDate(dateNext.getDate() + 1);
 			const reservations = this.calendar.getReservations(date, dateNext);
 			const hasWhole = reservations.some((r) => r.whole_day);
-			const isWeekend = dayOfWeek > 5;
+			const isWeekend = (dayOfWeek > 5) && !this.calendar.settings.allowWeekends;
 			const isInPast = date < CalendarMode.roundDateDay(now);
 			const isToday = CalendarMode.isSameDay(date, now);
 

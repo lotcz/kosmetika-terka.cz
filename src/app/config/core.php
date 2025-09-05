@@ -5,7 +5,7 @@
 		// this is application version represented as real number in format: MAJOR.MINOR
 		// MAJOR should be identical with GIT branch name, or like v1, v2, v3, etc.
 		// MINOR versions are bugfixes and small improvements
-		'app_version' => 4.3,
+		'app_version' => 4.4,
 
 		// this is minimum required zEngine version
 		'minimum_z_version' => 24.4,
@@ -20,7 +20,7 @@
 		'site_title' => 'Kosmetika TERKA',
 		'site_description' => 'Profesionální kosmetické služby v centru Prahy. Kosmetické ošetření pleti a nehtů, manikůra i pedikůra, galvanická žehlička. Osobní přístup a přátelská atmosféra.',
 		'site_author' => 'Karel Zavadil',
-		'site_keywords' => 'terka,Tereza Houšková,kosmetika,nehty,nehtové studio,kosmetické služby,ošetření pleti,galvanická žehlička,masáž očí,casmara,skyendor',
+		'site_keywords' => 'kosmetický salon,terka,Tereza Houšková,kosmetika,nehty,nehtové studio,kosmetické služby,ošetření pleti,galvanická žehlička,masáž očí,casmara,skyendor',
 
 		// will be used to create all link urls, no trailing slash
 		'base_url' => 'http://kosmetika.loc',
