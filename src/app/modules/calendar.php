@@ -195,7 +195,7 @@ class calendarModule extends zModule {
 	function getReservationSummary(CalendarReservationModel $reservation, $admin = false): string {
 		$units = $reservation->bval('calendar_reservation_whole_day') ? 'dní' : 'minut';
 		return "<div>
-			<div>Datum: {$this->z->core->formatDate($reservation->dtval('calendar_reservation_start'))}</div>
+			<div>Datum: {$this->z->core->formatDatetime($reservation->dtval('calendar_reservation_start'))}</div>
 			<div>Procedura: {$reservation->val('service')}</div>
 			<div>Trvání: {$reservation->ival('calendar_reservation_duration')} $units</div>
 			<div>Poznámka: {$reservation->val('calendar_reservation_note')}</div>
