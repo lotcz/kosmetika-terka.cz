@@ -8,7 +8,7 @@
 			'language' => 'cs',
 			'autoresize' => false,
 			'resize' => true,
-			'height' => 250,
+			'height' => 350,
 			'branding' => false,
 			'menubar' => false,
 			'plugins' => "wordcount link lists image code",

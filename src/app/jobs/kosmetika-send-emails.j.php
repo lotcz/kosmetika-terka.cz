@@ -11,14 +11,14 @@
 		//send email to customer
 		$summary = $this->z->calendar->getReservationSummary($reservation);
 		$body = "<div>
-			<h3>Přijali jsme vaši rezervaci</h3>
-			<br/>
-			$summary
-			<br/>
-			<p>Vaši rezervaci můžete změnit nebo zrušit na našich <a href=\"$public_url\">stránkách</a>.</p>
-			<p>Budeme se na vás těšit.</p>
-			<p>KOSMETIKA TERKA</p>
-		</div>";
+	<h3>Přijali jsme vaši rezervaci</h3>
+	<br/>
+	$summary
+	<br/>
+	<p>Vaši rezervaci můžete změnit nebo zrušit na našich <a href=\"$public_url\">stránkách</a>.</p>
+	<p>Budeme se na vás těšit.</p>
+	<p>KOSMETIKA TERKA</p>
+</div>";
 		$this->z->emails->sendHtmlBody($reservation->val('email'), $this->z->emails->getEmailSubject('Nová rezervace'), $body, $from_address);
 
 		echo "Sent email to {$reservation->val('email')}" . PHP_EOL;
@@ -29,16 +29,16 @@
 		} else {
 			if ($reservation->val('email') !== $admin_email) {
 				$body = "<div>
-					<h3>Zákazník vytvořil novou rezervaci</h3>
-					<br/>
-					<div>Jméno: <strong>{$reservation->val('name')}</strong></div>
-					<div>Email: <a href=\"mailto:{$reservation->val('email')}\">{$reservation->val('email')}</a></div>
-					<div>Telefon: {$reservation->val('phone')}</div>
-					$summary
-					<br/>
-					<p>Rezervace lze změnit nebo zrušit v administraci na <a href=\"$admin_url\">stránkách</a>.</p>
-					<p>Karel</p>
-				</div>";
+	<h3>Zákazník vytvořil novou rezervaci</h3>
+	<br/>
+	<div>Jméno: <strong>{$reservation->val('name')}</strong></div>
+	<div>Email: <a href=\"mailto:{$reservation->val('email')}\">{$reservation->val('email')}</a></div>
+	<div>Telefon: {$reservation->val('phone')}</div>
+	$summary
+	<br/>
+	<p>Rezervace lze změnit nebo zrušit v administraci na <a href=\"$admin_url\">stránkách</a>.</p>
+	<p>Karel</p>
+</div>";
 				$this->z->emails->sendHtmlBody($admin_email, $this->z->emails->getEmailSubject('Nová rezervace'), $body, $from_address);
 
 				echo "Sent email to $admin_email" . PHP_EOL;
@@ -73,15 +73,15 @@
 		//send email to customer
 		$summary = $this->z->calendar->getReservationSummary($reservation);
 		$body = "<div>
-			<h3>Termín vaší rezervace se blíží</h3>
-			<br/>
-			$summary
-			<br/>
-			<p>Vaši rezervaci můžete změnit nebo zrušit na našich <a href=\"$public_url\">stránkách</a>.</p>
-			<p>V případě dotazů se nám můžete ozvat na mail <a href=\"mailto:{$admin_email}\">{$admin_email}</a> nebo zavolat na číslo +420 605 743 494.</p>
-			<p>Budeme se na vás těšit.</p>
-			<p>KOSMETIKA TERKA</p>
-		</div>";
+	<h3>Termín vaší rezervace se blíží</h3>
+	<br/>
+	$summary
+	<br/>
+	<p>Vaši rezervaci můžete změnit nebo zrušit na našich <a href=\"$public_url\">stránkách</a>.</p>
+	<p>V případě dotazů se nám můžete ozvat na mail <a href=\"mailto:{$admin_email}\">{$admin_email}</a> nebo zavolat na číslo +420 605 743 494.</p>
+	<p>Budeme se na vás těšit.</p>
+	<p>KOSMETIKA TERKA</p>
+</div>";
 		$this->z->emails->sendHtmlBody($reservation->val('email'), $this->z->emails->getEmailSubject('Termín vaší rezervace se blíží'), $body, $from_address);
 
 		echo "Sent email to {$reservation->val('email')}" . PHP_EOL;

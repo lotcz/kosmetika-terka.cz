@@ -3,6 +3,7 @@
 	require_once __DIR__ . '/../../../models/cosmetic-service-category.m.php';
 
 	$this->z->enableModule('tinymce');
+	$this->z->tinymce->activateTinyMce('admin.bottom');
 
 	$this->renderAdminForm(
 		'CosmeticServiceModel',
