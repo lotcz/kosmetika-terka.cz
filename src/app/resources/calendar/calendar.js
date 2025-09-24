@@ -139,14 +139,13 @@ class ModeMonth extends CalendarMode {
 
 			if (isToday) {
 				z.addClass(slot, 'today');
-				z.addClass(slot, 'past');
 			}
 
 			if (isWeekend) {
 				z.addClass(slot, 'weekend');
 			}
 
-			if (!(isWeekend || isInPast || isToday)) {
+			if (!(isWeekend || isInPast)) {
 				if (reservations.length > 0 && !hasWhole) {
 					const r9s = z.createElement(slot, 'div', 'reservations');
 					reservations.forEach((r) => {

@@ -30,9 +30,16 @@
 					// not admin
 					} else {
 						if ($this->z->auth->user->get('user_email') === $email) {
-							$reservation = $this->z->calendar->saveReservationJson($this->z->auth->user->ival('user_id'), $res);
-							$json->result = $reservation->getJson();
-							$json->message = $this->t('Rezervace byla uložena.');
+							$start = z::parseDatetime($res->start);
+							$now = new DateTime();
+							if ($start->getTimestamp() <= $now->getTimestamp()) {
+								$code = 400;
+								$json->message = 'Nelze vkládat rezervace zpětně do minulosti!';
+							} else {
+								$reservation = $this->z->calendar->saveReservationJson($this->z->auth->user->ival('user_id'), $res);
+								$json->result = $reservation->getJson();
+								$json->message = $this->t('Rezervace byla uložena.');
+							}
 						} else {
 							$code = 401;
 							$json->message = $this->t('Access Forbidden');

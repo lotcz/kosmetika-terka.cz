@@ -149,8 +149,8 @@
 }
 
 .calendar .view-month .slot-day.today {
-	box-shadow: 0 0 10px #5172de;
-	border: solid 1px #5172de;
+	color: #6767c6;
+	border: solid 1px #6767c6;
 	font-weight: bold;
 
 }
