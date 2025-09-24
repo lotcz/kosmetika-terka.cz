@@ -87,6 +87,13 @@
 	border-radius: 10px;
 	padding: 20px;
 	text-align: center;
+	border: solid 1px transparent;
+}
+
+.calendar .view-month .slot-day.is-admin:hover {
+	cursor: pointer;
+	color: #fff;
+	background: #8ac28a;
 }
 
 .calendar .view-month .slot-day .reservations {
@@ -104,6 +111,10 @@
 	border-radius: 4px;
 	margin-top: 2px;
 	margin-right: 2px;
+}
+
+.calendar .view-month .slot-day.past .reservations .reservation {
+	background-color: white;
 }
 
 .calendar .view-month .slot-day .reservations .reservation.vacation {
@@ -149,8 +160,9 @@
 }
 
 .calendar .view-month .slot-day.today {
-	color: #6767c6;
-	border: solid 1px #6767c6;
+	color: #D4AF37;
+	border: solid 1px #D4AF37;
+	box-shadow: 0 0 10px #D4AF37;
 	font-weight: bold;
 
 }

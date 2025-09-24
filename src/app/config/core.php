@@ -5,7 +5,7 @@
 		// this is application version represented as real number in format: MAJOR.MINOR
 		// MAJOR should be identical with GIT branch name, or like v1, v2, v3, etc.
 		// MINOR versions are bugfixes and small improvements
-		'app_version' => 4.8,
+		'app_version' => 4.9,
 
 		// this is minimum required zEngine version
 		'minimum_z_version' => 25.94,

@@ -133,6 +133,10 @@ class ModeMonth extends CalendarMode {
 			const isInPast = date < CalendarMode.roundDateDay(now);
 			const isToday = CalendarMode.isSameDay(date, now);
 
+			if (this.calendar.adminMode) {
+				z.addClass(slot, 'is-admin');
+			}
+
 			if (isInPast) {
 				z.addClass(slot, 'past');
 			}
@@ -145,14 +149,17 @@ class ModeMonth extends CalendarMode {
 				z.addClass(slot, 'weekend');
 			}
 
-			if (!(isWeekend || isInPast)) {
+			const isLocked = (isWeekend || isInPast);
+			if (this.calendar.adminMode || !isLocked) {
 				if (reservations.length > 0 && !hasWhole) {
 					const r9s = z.createElement(slot, 'div', 'reservations');
 					reservations.forEach((r) => {
 						z.createElement(r9s, 'div', 'reservation');
 					});
 				}
-				z.addClass(slot, hasWhole ? 'occupied' : 'available');
+				if (!isLocked) {
+					z.addClass(slot, hasWhole ? 'occupied' : 'available');
+				}
 				if (this.calendar.adminMode || !hasWhole) {
 					slot.addEventListener('click', () => this.calendar.setModeAndDay(MODE_DAY, date));
 				}
@@ -714,9 +721,8 @@ export class Calendar {
 
 	render() {
 		this.mode.modeUpKey ? z.show(this.upButton) : z.hide(this.upButton);
-		this.mode.modeUpKey ? z.hide(this.homeButton) : z.show(this.homeButton);
 		this.homeButton.disabled = (this.currentDay.getTime() === this.mode.roundDate(this.today).getTime());
-		this.prevButton.disabled = (this.mode.getDatePrev(this.currentDay) < this.mode.roundDate(this.today));
+		this.prevButton.disabled = (this.mode.getDatePrev(this.currentDay) < this.mode.roundDate(this.today)) && !this.adminMode;
 		this.dateDesc.innerText = this.mode.getDescription(this.currentDay);
 
 		if (this.reservations === null) {
