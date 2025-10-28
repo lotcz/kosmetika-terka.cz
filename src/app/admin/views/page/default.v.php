@@ -15,7 +15,7 @@
 		</a>
 	</li>
 	<li>
-		<a href="<?=$this->url('admin/default/default/gallery/edit/') ?>">
+		<a href="<?=$this->url('admin/default/default/gallery/edit/' . $this->z->kosmetika->getGalleryId()) ?>">
 			Galerie
 		</a>
 	</li>

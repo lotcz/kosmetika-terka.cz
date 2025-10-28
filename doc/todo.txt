@@ -1,2 +1,0 @@
-- allow accessing today for all
-- make sure no reservation is possible for past

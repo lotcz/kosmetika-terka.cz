@@ -14,12 +14,10 @@ CREATE TABLE `calendar_reservation` (
   PRIMARY KEY (`calendar_reservation_id`),
   CONSTRAINT `calendar_reservation_user_fk`
 	 FOREIGN KEY (`calendar_reservation_user_id`)
-		REFERENCES `user` (`user_id`)
-		ON DELETE cascade,
+		REFERENCES `user` (`user_id`),
   CONSTRAINT `calendar_reservation_cosmetic_service_fk`
 	 FOREIGN KEY (`calendar_reservation_cosmetic_service_id`)
 		REFERENCES `cosmetic_service` (`cosmetic_service_id`)
-		ON DELETE cascade
 ) ENGINE=InnoDB;
 
 ALTER TABLE calendar_reservation

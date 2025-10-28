@@ -441,15 +441,15 @@ export class Calendar {
 			this.durationInputControl.setAttribute('min', 1);
 			this.durationInputControl.setAttribute('max', 30);
 			this.durationInputControl.setAttribute('step', 1);
-			return;
+		} else {
+			z.show(this.serviceControl);
+			z.show(this.nameControl);
+			z.show(this.noteControl);
+			this.durationUnitControl.innerText = 'minut';
+			this.durationInputControl.setAttribute('min', 60 * this.settings.slotDuration);
+			this.durationInputControl.setAttribute('max', 60 * 16 * this.settings.slotDuration);
+			this.durationInputControl.setAttribute('step', 60 * this.settings.slotDuration);
 		}
-		z.show(this.serviceControl);
-		z.show(this.nameControl);
-		z.show(this.noteControl);
-		this.durationUnitControl.innerText = 'minut';
-		this.durationInputControl.setAttribute('min', 60 * this.settings.slotDuration);
-		this.durationInputControl.setAttribute('max', 60 * 16 * this.settings.slotDuration);
-		this.durationInputControl.setAttribute('step', 60 * this.settings.slotDuration);
 	}
 
 	showFormMessage(message = '', style = 'light') {
@@ -579,6 +579,15 @@ export class Calendar {
 			wdCheck.checked = reservation.whole_day;
 			wdCheck.addEventListener('change', (e) => {
 				reservation.whole_day = wdCheck.checked;
+				if (reservation.whole_day) {
+					reservation.duration = 1;
+				} else {
+					const service = this.getService(reservation.cosmetic_service_id);
+					if (service) {
+						reservation.duration = service.duration_minutes;
+					}
+				}
+				this.frm.elements['duration'].value = reservation.duration;
 				this.wholeDayChanged();
 				this.formChanged();
 			});
